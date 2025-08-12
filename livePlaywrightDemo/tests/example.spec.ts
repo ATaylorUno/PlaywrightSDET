@@ -7,6 +7,8 @@ test('has title', async ({ page }) => {
   await expect(page).toHaveTitle(/Playwright/);
 });
 
+
+
 test('Selector Test', async ({ page }) => {
   await page.goto('https://www.letskodeit.com/practice');
   await page.locator('#bmwradio').check();
@@ -42,12 +44,6 @@ test('get started link', async ({ page }) => {
   // Expects page to have a heading with the name of Installation.
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
-
-test('test 4', async ({ page })=> {
-  await page.goto('htttps://playwrite.dev/');
-  // Expect a title to contain a substring
-
-})
 
 test('Checkbox Test', async ({ page })=> {
   await page.goto('https://www.letskodeit.com/practice');
