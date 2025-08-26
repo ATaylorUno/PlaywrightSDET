@@ -14,7 +14,7 @@ test('Selector Test', async ({ page }) => {
 
   // await page.screenshot({ path: 'screenshots/screenshotFile.png', fullPage: true });
 
-    await page.locator('#benzcheck').check().screenshot({ path: 'screenshots/screenshotFile2.png', fullPage: true });
+    await page.locator('#benzcheck').screenshot({ path: 'screenshots/screenshotFile2.png'});
 
   // await page.locator('#hondacheck').check();
   // await page.waitForSelector('#hondacheck', { state: 'hidden});
@@ -83,6 +83,25 @@ await page.locator('#opentab').click();
 const popup = await newTab;
 
 await expect(popup).toHaveURL('https://www.letskodeit.com/courses'); 
+await popup.getByRole('textbox', { name: 'Search Course'}).fill('Course example')
+})
+
+test.only('Switch Tab and Windows', async ({ page })=> {
+
+await page.goto('https://www.letskodeit.com/practice');
+
+// let [newTab] = await Promise.all()([
+//   page.waitForEvent('popup'),
+//   await page.getByRole()
+// ]
+// )
+// await page.getByRole('link', { name: 'Open Tab '}).click()
+
+// newTab = page.waitForEvent('popup');
+// await page.locator('#opentab').click();
+// const popup = await newTab;
+
+// await expect(popup).toHaveURL('https://www.letskodeit.com/courses'); 
 
 })
 
@@ -94,3 +113,22 @@ const dropDown = page.getByLabel('carselect');
 await dropDown.selectOption({ label: 'BMW' });
 
 })
+
+test.only('Iframe example', async ({ page })=> {
+  await page.goto('https://www.letskodeit.com/practice');
+
+  // get inside the iframe
+  const frame = page.frameLocator('iframe#courses-iframe');
+
+  // locate the search input
+
+  await frame.locator('input[name="course"]').fill('Playwright test');
+  await page.screenshot({ path: 'screenshots/screenshotIframe.png', fullPage: true });
+
+  // click the search button
+  await frame.locator('button.find-course').click();
+  await page.screenshot({ path: 'screenshots/screenshotIframe2.png', fullPage: true });
+
+
+})
+
