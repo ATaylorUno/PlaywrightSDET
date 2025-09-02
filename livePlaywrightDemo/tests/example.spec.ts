@@ -132,3 +132,11 @@ test.only('Iframe example', async ({ page })=> {
 
 })
 
+test.only('Mouse Hover', async ({ page })=> {
+
+  await page.goto('https://www.letskodeit.com/practice');
+
+  await page.getByRole('link').hover();
+
+
+})
