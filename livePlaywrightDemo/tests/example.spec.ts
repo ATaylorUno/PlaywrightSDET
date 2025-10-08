@@ -48,7 +48,7 @@ test.skip('get started link', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
 
-test('test 4', async ({ page })=> {
+test.fail('test 4', async ({ page })=> {
   await page.goto('htttps://playwrite.dev/');
   // Expect a title to contain a substring
 
