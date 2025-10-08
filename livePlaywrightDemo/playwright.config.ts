@@ -27,6 +27,8 @@ export default defineConfig({
 
   outputDir: 'artifacts/',
 
+  timeout: 30000,
+
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
@@ -46,7 +48,11 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+     use: {
+        ...devices['Desktop Chrome'],
+        //viewport: { width: 1280, height: 720 }
+        isMobile: true
+      },
     },
 
     {
@@ -56,8 +62,13 @@ export default defineConfig({
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: {
+        ...devices['Desktop Safari'],
+        viewport: { width: 1280, height: 720 },
+      },
+
     },
+
 
     /* Test against mobile viewports. */
     // {

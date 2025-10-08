@@ -38,7 +38,7 @@ test('Selector Test', async ({ page }) => {
   // await expect(page).toHaveTitle(/Playwright/);
 });
 
-test('get started link', async ({ page }) => {
+test.skip('get started link', async ({ page }) => {
   await page.goto('https://playwright.dev/');
 
   // Click the get started link.
@@ -86,9 +86,12 @@ await expect(popup).toHaveURL('https://www.letskodeit.com/courses');
 await popup.getByRole('textbox', { name: 'Search Course'}).fill('Course example')
 })
 
-test.only('Switch Tab and Windows', async ({ page })=> {
+test.describe('Switch Tab and Windows', {
+  tag: '@report',
+}, () => {
+  test('Switch Tab', async ({ page }) => {
 
-await page.goto('https://www.letskodeit.com/practice');
+    await page.goto('https://www.letskodeit.com/practice');
 
 // let [newTab] = await Promise.all()([
 //   page.waitForEvent('popup'),
@@ -103,9 +106,41 @@ await page.goto('https://www.letskodeit.com/practice');
 
 // await expect(popup).toHaveURL('https://www.letskodeit.com/courses'); 
 
-})
+  const [newTab] = await Promise.all([
+    page.waitForEvent('popup'), //wait for the new tab to open
+    await page.getByRole('link', { name: 'Open Tab' }).click()
+  ]);
 
-test('Drop down', async ({ page })=> {
+  await newTab.waitForLoadState();
+  console.log('New tab url: ', newTab.url());
+  await newTab.getByRole('textbox', { name: 'Search Course' }).fill('Course example');
+
+});
+
+test.beforeEach(async ({ page, isMobile }) => {
+  test.fixme(isMobile, 'Home page not working in mobile yet');
+
+  await page.goto('https://www.letskodeit.com/practice');
+});
+
+test.fail('tab test @slow', async ({ page }) => {
+
+  await page.goto('https://www.letskodeit.com/practice');
+  const newTab = page.waitForEvent('popup');
+  await page.locator('#opentab').click();
+  const popup = await newTab;
+
+  await expect(popup).toHaveURL('https://www.letskodeit.com/courses');
+  await popup.getByRole('textbox', { name: 'Search Course' }).fill('Course example');
+
+});
+test.afterEach(async ({ page, isMobile }) => {
+  test.fixme(isMobile, 'Home page not working in mobile yet');
+
+  await page.goto('https://www.letskodeit.com/practice');
+});
+
+test.fixme('Drop down', async ({ page })=> {
 
 await page.goto('https://www.letskodeit.com/practice');
 
@@ -114,7 +149,7 @@ await dropDown.selectOption({ label: 'BMW' });
 
 })
 
-test.only('Iframe example', async ({ page })=> {
+test('Iframe example', async ({ page })=> {
   await page.goto('https://www.letskodeit.com/practice');
 
   // get inside the iframe
@@ -132,7 +167,7 @@ test.only('Iframe example', async ({ page })=> {
 
 })
 
-test.only('Mouse Hover', async ({ page })=> {
+test.skip('Mouse Hover', async ({ page })=> {
 
   await page.goto('https://www.letskodeit.com/practice');
 
